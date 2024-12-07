@@ -8,5 +8,7 @@ This is a College Project which is based on Smart Land Registration System By us
 * Addition of codes
   * Make a folder that specifies your work topic for example - AI , BLOCKCHAIN etc
   * Add all the code files there 'DO ADD A README WITH SCREENSHOTS GIFS OR SOME DETAILS'
-* Collaborators are free to make issues
+* Collaborators are free to make issues and also do give a star to the  repo !!!
+
+  happy coding 
 
