@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440" height="320" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="landGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a73e8;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#0052cc;stop-opacity:0.6"/>
+    </linearGradient>
+    
+    <pattern id="landPattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <path 
+        d="M0 100 
+           Q25 75, 50 100 
+           Q75 125, 100 100 
+           M0 50 
+           Q25 25, 50 50 
+           Q75 75, 100 50" 
+        fill="none" 
+        stroke="rgba(255,255,255,0.1)" 
+        stroke-width="1"
+      />
+    </pattern>
+  </defs>
+  
+  <rect width="1440" height="320" fill="url(#landGradient)"/>
+  <rect width="1440" height="320" fill="url(#landPattern)"/>
+  
+  <g transform="translate(0, 200)">
+    <path 
+      d="M0 0 
+         C480 100, 960 -100, 1440 0 
+         L1440 120 
+         L0 120 
+         Z" 
+      fill="white" 
+      opacity="0.1"
+    />
+  </g>
+</svg>

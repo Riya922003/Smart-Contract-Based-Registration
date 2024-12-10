@@ -8,6 +8,7 @@ import Home from './components/Home';
 import RegisterLand from './components/RegisterLand';
 import TransferLand from './components/TransferLand';
 import ViewRecords from './components/ViewRecords';
+import Footer from './components/Footer';
 
 const theme = createTheme({
   palette: {
@@ -115,6 +116,9 @@ const globalStyles = {
     backgroundColor: '#f8f9fa',
     scrollbarWidth: 'thin',
     scrollbarColor: '#1a73e8 #f8f9fa',
+    backgroundImage: 'url("/subtle-grid.svg")',
+    backgroundRepeat: 'repeat',
+    position: 'relative',
   },
   '::-webkit-scrollbar': {
     width: '8px',
@@ -133,6 +137,31 @@ const globalStyles = {
   '#root': {
     minHeight: '100vh',
     overflowX: 'hidden',
+    position: 'relative',
+    zIndex: 1,
+  },
+  '@keyframes float': {
+    '0%': { transform: 'translateY(0px)' },
+    '50%': { transform: 'translateY(-20px)' },
+    '100%': { transform: 'translateY(0px)' },
+  },
+  '.background-bubbles': {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none',
+    zIndex: -1,
+    overflow: 'hidden',
+  },
+  '.bubble': {
+    position: 'absolute',
+    borderRadius: '50%',
+    backgroundColor: 'rgba(25, 118, 210, 0.05)',
+    animation: 'float 10s ease-in-out infinite',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.01)',
+    aspectRatio: '1/1', // Ensures perfect circle
   },
 };
 
@@ -141,6 +170,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GlobalStyles styles={globalStyles} />
+      <div className="background-bubbles">
+        {[...Array(20)].map((_, index) => (
+          <div
+            key={index}
+            className="bubble"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 100}px`, // Increased size variation
+              height: `${Math.random() * 100}px`, // Increased size variation
+              animationDelay: `${Math.random() * 10}s`,
+            }}
+          />
+        ))}
+      </div>
       <Router>
         <Navbar />
         <Routes>
@@ -149,6 +193,7 @@ function App() {
           <Route path="/transfer" element={<TransferLand />} />
           <Route path="/records" element={<ViewRecords />} />
         </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
