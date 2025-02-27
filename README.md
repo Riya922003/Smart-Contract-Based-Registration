@@ -14,7 +14,7 @@ This repository is dedicated to building a **Smart Contract-Based Land and Prope
    - Example folders: `blockchain`, `AI`, `frontend`, `backend`, etc.  
 
 2. **Add Your Files**:  
-   - Place all your related files inside the respective folder.  
+   - Place all your related files inside the respective folder Please don't forget to remove any API key used.  
    - Ensure that your code is properly structured and well-documented.  
 
 3. **Include a README in Your Folder**:  
