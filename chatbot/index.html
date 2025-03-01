@@ -1,82 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>WSP ChatBot</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
-		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-		<style>
-			#response {
-				margin-top: 20px;
-				padding: 10px;
-				min-height: 50px;
-			}
-			#response h3 {
-				color: #333;
-				font-size: 1.2em;
-			}
-			#response strong {
-				color: #d9534f;
-			}
-			#response ul {
-				padding-left: 20px;
-			}
-			#response li {
-				margin-bottom: 5px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<h2>ChatBot</h2>
-			<div class="form-group">
-				<input
-					type="text"
-					class="form-control"
-					id="userInput"
-					placeholder="Enter your question" />
-			</div>
-			<button class="btn btn-success" onclick="sendMessage()">Ask!</button>
-			<div id="response"></div>
-		</div>
-		<script>
-			async function sendMessage() {
-				const input = document.getElementById('userInput').value;
-				const responseDiv = document.getElementById('response');
-				if (!input) {
-					responseDiv.innerHTML = 'Please enter a message.';
-					return;
-				}
-				responseDiv.innerHTML = 'Loading...';
-				try {
-					const response = await fetch(
-						'https://openrouter.ai/chat?models=deepseek/deepseek-r1:free',
-						{
-							method: 'POST',
-							headers: {
-								Authorization: 'Bearer WRITE YOUR API KEY HERE',
-								'HTTP-Referer': 'https://www.sitename.com',
-								'X-Title': 'SiteName',
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify({
-								model: 'deepseek/deepseek-r1:free',
-								messages: [{ role: 'user', content: input }],
-							}),
-						}
-					);
-					const data = await response.json();
-					console.log(data);
-					const markdownText =
-						data.choices?.[0]?.message?.content || 'No response received.';
-					responseDiv.innerHTML = marked.parse(markdownText);
-				} catch (error) {
-					responseDiv.innerHTML = 'Error: ' + error.message;
-				}
-			}
-		</script>
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart contract based land registry Chatbot</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 30px;
+        }
+        .container {
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #4285F4;
+            margin-bottom: 25px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #4285F4;
+        }
+        #response h3 {
+            color: #333;
+            font-size: 1.2em;
+        }
+        #response strong {
+            color: #4285F4;
+        }
+        #response ul {
+            padding-left: 20px;
+        }
+        #response li {
+            margin-bottom: 5px;
+        }
+        pre {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        code {
+            color: #d63384;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(66, 133, 244, 0.3);
+            border-radius: 50%;
+            border-top-color: #4285F4;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        #chatHistory {
+            margin-top: 30px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #e8f0fe;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            text-align: right;
+            margin-left: 40px;
+        }
+        .assistant-message {
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            margin-right: 40px;
+        }
+        .gemini-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .gemini-logo span {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 10px;
+            background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gemini-logo">
+            <svg height="24" viewBox="0 0 24 24" width="24"><path d="M22 15.18c-.12-.36-.3-.7-.53-1.01l-3.33 3.32c.24.17.51.29.8.36.69.18 1.42.04 2-.38.44-.32.74-.79.87-1.32.09-.34.11-.69.05-1.04l.14.07z" fill="#ea4335"/><path d="M13.67 16.25l3.34-3.33c-.17-.24-.29-.5-.36-.79-.18-.69-.04-1.41.38-1.99.32-.44.79-.74 1.32-.87.33-.09.67-.11 1.01-.05l-.08-.13c-.36-.12-.69-.3-1-.53l-5.96 5.95 1.35 1.74z" fill="#34a853"/><path d="M10 19v-4.25l7-7V4.5C17 3.12 15.88 2 14.5 2H5C3.62 2 2.5 3.12 2.5 4.5v11C2.5 16.88 3.62 18 5 18h4.59l.08.06L10 19z" fill="#4285f4"/><path d="M17 7.75l-7 7V19l10-10-1.17-2.49c-.3.13-.62.22-.95.22-.8 0-1.55-.38-2.01-1.01-.25-.34-.41-.73-.47-1.15L17 7.75z" fill="#fbbc05"/></svg>
+            <span>Gemini Chatbot</span>
+        </div>
+        <div class="form-group">
+            <input
+                type="text"
+                class="form-control"
+                id="userInput"
+                placeholder="Enter your question" />
+        </div>
+        <button class="btn btn-primary" onclick="sendMessage()">Ask!</button>
+        <div id="response"></div>
+
+        <div id="chatHistory">
+            <div class="assistant-message">
+                Hello! I'm a Gemini-powered AI assistant. How can I help you today?
+            </div>
+        </div>
+    </div>
+    <script>
+        const conversationHistory = [
+            { role: "model", parts: [{ text: "Hello! I'm a Gemini-powered AI assistant. How can I help you today?" }] }
+        ];
+        
+        // Set API key
+        const apiKey = "WRITE YOUR API KEY";
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput').value;
+            const responseDiv = document.getElementById('response');
+            const chatHistory = document.getElementById('chatHistory');
+            
+            if (!input) {
+                responseDiv.innerHTML = 'Please enter a message.';
+                return;
+            }
+            chatHistory.innerHTML += `<div class="user-message">${input}</div>`;
+            document.getElementById('userInput').value = '';
+            responseDiv.innerHTML = '<div class="loading"></div> Thinking...';
+            try {
+                const messages = [];
+                for (let i = 0; i < conversationHistory.length; i++) {
+                    messages.push(conversationHistory[i]);
+                }
+                messages.push({
+                    role: "user",
+                    parts: [{ text: input }]
+                });
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: messages,
+                            generationConfig: {
+                                temperature: 0.7,
+                                topK: 40,
+                                topP: 0.95,
+                                maxOutputTokens: 1024,
+                            }
+                        }),
+                    }
+                );
+                const data = await response.json();
+                console.log(data);
+                
+                if (data.error) {
+                    responseDiv.innerHTML = `Error: ${data.error.message}`;
+                    return;
+                }
+                let assistantResponse = '';
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    assistantResponse = data.candidates[0].content.parts[0].text || 'No response received.';
+                    conversationHistory.push({
+                        role: "user",
+                        parts: [{ text: input }]
+                    });
+                    conversationHistory.push({
+                        role: "model",
+                        parts: [{ text: assistantResponse }]
+                    });
+                } else {
+                    assistantResponse = 'Sorry, I could not generate a response.';
+                }
+                
+
+                responseDiv.innerHTML = marked.parse(assistantResponse);
+
+                chatHistory.innerHTML += `<div class="assistant-message">${marked.parse(assistantResponse)}</div>`;
+                
+
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+                
+            } catch (error) {
+                responseDiv.innerHTML = 'Error: ' + error.message;
+            }
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
 </html>
